@@ -28,9 +28,9 @@ app.get(('/search'), (req, res) => {
   // let letter lower case & clear all space
   const keyword = req.query.keyword.toLocaleLowerCase().replace(/\s*/g, "")
   const restaurants = restaurantList.filter(data => {
-    const data_name = data.name.toLocaleLowerCase().replace(/\s*/g, "")
-    const data_category = data.category.toLocaleLowerCase().replace(/\s*/g, "")
-    return (data_name.includes(keyword)) || (data_category.includes(keyword))
+    const dataName = data.name.toLocaleLowerCase().replace(/\s*/g, "")
+    const dataCategory = data.category.toLocaleLowerCase().replace(/\s*/g, "")
+    return (dataName.includes(keyword)) || (dataCategory.includes(keyword))
   })
   // if search 0 results, showNothing
   restaurants.length === 0 ? res.render('showNothing') : res.render('index', { restaurants, keyword })
