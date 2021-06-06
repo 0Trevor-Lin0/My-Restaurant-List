@@ -23,21 +23,45 @@ db.once('open', () => console.log('mongodb connected!'))
 // setting static files
 app.use(express.static('public'))
 
+// 用 app.use 規定每一筆請求都需要透過 body-parser 進行前置處理
+app.use(express.urlencoded({ extended: true }))
+
 
 // setting template engine
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
 
-app.get(('/'), (req, res) => {
+app.get('/', (req, res) => {
   Restaurant.find()
     .lean()
     .then(restaurants => res.render('index', { restaurants }))
-    .catch(error => console.error(error))
+    .catch(error => console.log(error))
 })
 
-app.get(('/restaurants/:restaurant_id'), (req, res) => {
+//讓使用者填寫表單頁面
+app.get('/restaurants/new', (req, res) => res.render('new'))
+
+app.get('/restaurants/:restaurant_id', (req, res) => {
   const restaurant = restaurantList.find(data => data.id.toString() === req.params.restaurant_id)
   res.render('show', { restaurant })
+})
+
+//運用post將資料新增傳進資料庫
+app.post('/restaurants', (req, res) => {
+  const newData = req.body
+  return Restaurant.create({
+    name: `${newData.name}`,
+    name_en: `${newData.name_en}`,
+    category: `${newData.category}`,
+    image: `${newData.image}`,
+    location: `${newData.location}`,
+    phone: `${newData.phone}`,
+    google_map: `${newData.google_map}`,
+    rating: `${newData.rating}`,
+    description: `${newData.description}`
+  })
+    .then(() => res.redirect('/'))
+    .catch(error => console.log(error))
 })
 
 // set search route

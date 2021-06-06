@@ -1,0 +1,131 @@
+<div class="container mt-5">
+  <form class="needs-validation" action="/restaurants" method="POST" novalidate>
+    <div class="form-row">
+      <div class="col-md-6 mb-3">
+        <label for="name">Restaurant Name</label>
+        <input type="text" class="form-control" id="name" placeholder="Sababa 沙巴巴中東美食" name="name" required>
+        <div class="valid-feedback">
+          Looks good!
+        </div>
+        <div class="invalid-feedback">
+          Please input name
+        </div>
+      </div>
+      <div class="col-md-6 mb-3">
+        <label for="name_en">English Name</label>
+        <input type="text" class="form-control" id="name_en" name="name_en" placeholder="Sababa Pita Bar" required>
+        <div class="valid-feedback">
+          Looks good!
+        </div>
+        <div class="invalid-feedback">
+          Please input name
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="col-md-6 mb-3">
+        <label for="category">Category</label>
+        <input type="text" class="form-control" id="category" name="category" placeholder="中東料理" required>
+        <div class="valid-feedback">
+          Looks good!
+        </div>
+        <div class="invalid-feedback">
+          Please input category
+        </div>
+      </div>
+      <div class="col-md-6 mb-3">
+        <label for="image">Restaurant Image</label>
+        <input type="text" class="form-control" id="image" name="image"
+          placeholder="https://assets-lighthouse.s3.amazonaws.com/uploads/image/file/5635/01.jpg" required>
+        <div class="valid-feedback">
+          Looks good!
+        </div>
+        <div class="invalid-feedback">
+          Please input image link
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="col-md-6 mb-3">
+        <label for="location">Restaurant Location</label>
+        <input type="text" class="form-control" id="location" name="location" placeholder="XX市XXX路X段 XXX 巷 XX 號"
+          required>
+        <div class="valid-feedback">
+          Looks good!
+        </div>
+        <div class="invalid-feedback">
+          Please input restaurant location
+        </div>
+      </div>
+      <div class="col-md-4 mb-2">
+        <label for="phone">Restaurant Phone</label>
+        <input type="text" class="form-control" id="phone" name="phone" placeholder="02 xxxx xxxx or 09xx xxx xxx"
+          required>
+        <div class="valid-feedback">
+          Looks good!
+        </div>
+        <div class="invalid-feedback">
+          Please input restaurant phone
+        </div>
+      </div>
+      <div class="col-md-2 mb-2">
+        <label for="rating">Restaurant Rating</label>
+        <input type="number" step='0.1' class="form-control" id="rating" name="rating" placeholder="0.0 ~ 5.0" required>
+        <div class="valid-feedback">
+          Looks good!
+        </div>
+        <div class="invalid-feedback">
+          Please input restaurant rating
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="col-md-12 mb-3">
+        <label for="google_map">Restaurant google_map</label>
+        <input type="text" class="form-control" id="google_map" name="google_map"
+          placeholder="https://goo.gl/maps/BJdmLuVdDbw" required>
+        <div class="valid-feedback">
+          Looks good!
+        </div>
+        <div class="invalid-feedback">
+          Please input restaurant google_map link
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="col-md-12 mb-3">
+        <label for="description">Description</label>
+        <input type="text" class="form-control" id="description" name="description"
+          placeholder="please write something the restaurant description" required>
+        <div class="valid-feedback">
+          Looks good!
+        </div>
+        <div class="invalid-feedback">
+          Please write something!
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-primary" type="submit">Submit form</button>
+  </form>
+</div>
+
+<script>
+  // Example starter JavaScript for disabling form submissions if there are invalid fields
+  (function () {
+    'use strict';
+    window.addEventListener('load', function () {
+      // Fetch all the forms we want to apply custom Bootstrap validation styles to
+      var forms = document.getElementsByClassName('needs-validation');
+      // Loop over them and prevent submission
+      var validation = Array.prototype.filter.call(forms, function (form) {
+        form.addEventListener('submit', function (event) {
+          if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+          form.classList.add('was-validated');
+        }, false);
+      });
+    }, false);
+  })();
+</script>
