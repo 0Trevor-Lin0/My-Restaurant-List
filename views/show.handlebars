@@ -35,8 +35,11 @@
         {{detailData.phone}}
       </p>
 
-      <p class="mb-5">
+      <p class="mb-2">
         {{detailData.description}}
+      <form action="/restaurants/{{ detailData._id }}/delete" method="POST" class="text-right">
+        <button type="submit" class="btn btn-dark"><i class="fas fa-trash-alt"></i></button>
+      </form>
       </p>
 
       <img class="rounded mx-auto d-block mb-4 w-100" src="{{detailData.image}}" alt="{{detailData.name}}"

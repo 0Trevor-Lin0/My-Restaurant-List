@@ -95,6 +95,15 @@ app.post('/restaurants/:id/edit', (req, res) => {
     .catch(error => console.log(error))
 })
 
+//設定刪除特定資料路由
+app.post('/restaurants/:id/delete', (req, res) => {
+  const id = req.params.id
+  return Restaurant.findById(id)
+    .then(detailData => detailData.remove())
+    .then(() => res.redirect('/'))
+    .catch(error => console.log(error))
+})
+
 // set search route
 app.get(('/search'), (req, res) => {
   // let letter lower case & clear all space
