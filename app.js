@@ -56,6 +56,28 @@ app.get('/restaurants/:id/edit', (req, res) => {
     .catch(error => console.log(error))
 })
 
+// set search route
+app.get(('/search'), (req, res) => {
+  // let letter lower case & clear all space
+  let restaurants = []
+  const keyword = req.query.keyword.toLocaleLowerCase().replace(/\s*/g, "")
+  return Restaurant.find()
+    .lean()
+    .then(restaurantLists => {
+      restaurants = restaurantLists.filter(data => {
+        const dataName = data.name.toLocaleLowerCase().replace(/\s*/g, "")
+        const dataCategory = data.category.toLocaleLowerCase().replace(/\s*/g, "")
+        return (dataName.includes(keyword)) || (dataCategory.includes(keyword))
+      })
+      return restaurants
+    })
+    .then(() => {
+      // if search 0 results, showNothing
+      restaurants.length === 0 ? res.render('showNothing') : res.render('index', { restaurants, keyword })
+    })
+    .catch(error => console.log(error))
+})
+
 //運用post將資料新增傳進資料庫
 app.post('/restaurants', (req, res) => {
   const newData = req.body
@@ -104,18 +126,6 @@ app.post('/restaurants/:id/delete', (req, res) => {
     .catch(error => console.log(error))
 })
 
-// set search route
-app.get(('/search'), (req, res) => {
-  // let letter lower case & clear all space
-  const keyword = req.query.keyword.toLocaleLowerCase().replace(/\s*/g, "")
-  const restaurants = restaurantList.filter(data => {
-    const dataName = data.name.toLocaleLowerCase().replace(/\s*/g, "")
-    const dataCategory = data.category.toLocaleLowerCase().replace(/\s*/g, "")
-    return (dataName.includes(keyword)) || (dataCategory.includes(keyword))
-  })
-  // if search 0 results, showNothing
-  restaurants.length === 0 ? res.render('showNothing') : res.render('index', { restaurants, keyword })
-})
 
 app.listen(port, () => {
   console.log(`ok! it's running on http://localhost:${port}`)
