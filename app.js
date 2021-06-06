@@ -1,8 +1,6 @@
 const express = require('express')
 // require express-handlebars
 const exphbs = require('express-handlebars')
-// require restaurant.json
-const restaurantList = require('./restaurant.json').results
 // 載入 mongoose
 const mongoose = require('mongoose')
 // 載入restaurant model
@@ -41,9 +39,12 @@ app.get('/', (req, res) => {
 //讓使用者填寫表單頁面
 app.get('/restaurants/new', (req, res) => res.render('new'))
 
-app.get('/restaurants/:restaurant_id', (req, res) => {
-  const restaurant = restaurantList.find(data => data.id.toString() === req.params.restaurant_id)
-  res.render('show', { restaurant })
+app.get('/restaurants/:id', (req, res) => {
+  const id = req.params.id
+  return Restaurant.findById(id)
+    .lean()
+    .then(detailData => res.render('show', { detailData }))
+    .catch(error => console.log(error))
 })
 
 //運用post將資料新增傳進資料庫
