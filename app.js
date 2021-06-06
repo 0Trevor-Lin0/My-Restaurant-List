@@ -47,6 +47,15 @@ app.get('/restaurants/:id', (req, res) => {
     .catch(error => console.log(error))
 })
 
+//設定修改表單路由
+app.get('/restaurants/:id/edit', (req, res) => {
+  const id = req.params.id
+  return Restaurant.findById(id)
+    .lean()
+    .then(detailData => res.render('edit', { detailData }))
+    .catch(error => console.log(error))
+})
+
 //運用post將資料新增傳進資料庫
 app.post('/restaurants', (req, res) => {
   const newData = req.body
@@ -62,6 +71,27 @@ app.post('/restaurants', (req, res) => {
     description: `${newData.description}`
   })
     .then(() => res.redirect('/'))
+    .catch(error => console.log(error))
+})
+
+//update資料至資料庫
+app.post('/restaurants/:id/edit', (req, res) => {
+  const id = req.params.id
+  const editData = req.body
+  return Restaurant.findById(id)
+    .then(detailData => {
+      detailData.name = editData.name
+      detailData.name_en = editData.name_en
+      detailData.category = editData.category
+      detailData.image = editData.image
+      detailData.location = editData.location
+      detailData.phone = editData.phone
+      detailData.google_map = editData.google_map
+      detailData.rating = editData.rating
+      detailData.description = editData.description
+      return detailData.save()
+    })
+    .then(() => res.redirect(`/restaurants/${id}`))
     .catch(error => console.log(error))
 })
 
