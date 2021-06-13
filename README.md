@@ -11,6 +11,9 @@
 - 使用者可以點擊"鉛筆"圖案，進行指定餐廳資料修改
 - 使用者可以使用下拉式選單，進行指定選項排列
 
+## Home page
+![image](public/img/Restaurant List - 2-3_A8.png)
+
 ## Installation
 
 1. Clone repository to your local computer
