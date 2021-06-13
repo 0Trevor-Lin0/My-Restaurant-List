@@ -1,6 +1,6 @@
 <!-- search bar -->
 <div class="container search-bar">
-  <div class="search-bar-outer">
+  <div class="search-bar-outer d-flex justify-content-between">
     <div class="search-bar-inner">
       <form action="/search">
         <h4 class="mb-2">想去哪聚...</h4>
@@ -13,17 +13,28 @@
         </div>
       </form>
     </div>
+    <form action="/sorts" method="get">
+      <div class="form-group sortBar">
+        <label class="sorts mb-0" for="sorts">
+          <h4>篩選</h4>
+        </label>
+        <select class="form-control" id="sorts" name="sorts" onchange="submit()">
+          <option value="name">Name</option>
+          <option value="name_e">Name_en A_Z</option>
+          <option value="-name_en">Name_en Z_A</option>
+          <option value="category">Category</option>
+          <option value="-rating">Rating H_L</option>
+          <option value="rating">Rating L_H</option>
+        </select>
+      </div>
+    </form>
   </div>
+
 </div>
 
 
 <!-- restaurant list -->
 <div class="container mt-5">
-  <div class="text-right">
-    <a type="button" class="btn btn-light pull-right" href="/restaurants/new">
-      <i class="fas fa-plus-square"></i>
-    </a>
-  </div>
   <div class="row">
     <div class="col-md-10 col-12 mx-auto">
       <div class="card-columns">

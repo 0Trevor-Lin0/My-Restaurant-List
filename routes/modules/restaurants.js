@@ -28,6 +28,7 @@ router.get('/:id/edit', (req, res) => {
 // 運用post將資料新增傳進資料庫
 router.post('/', (req, res) => {
   const newData = req.body
+  console.log(newData)
   return Restaurant.create({
     name: `${newData.name}`,
     name_en: `${newData.name_en}`,
