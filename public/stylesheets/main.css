@@ -4,6 +4,10 @@ header {
 
 .navbar {
   background-color: #e6f3f5;
+  position: fixed;
+  top: 0px;
+  z-index: 10;
+  width: 100%;
 }
 
 .navbar .navbar-brand {

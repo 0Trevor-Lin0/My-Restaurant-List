@@ -1,6 +1,6 @@
 <!-- search bar -->
-<div class="container search-bar">
-  <div class="search-bar-outer d-flex justify-content-between">
+<div class="container search-bar ">
+  <div class="search-bar-outer d-flex justify-content-between mx-auto">
     <div class="search-bar-inner">
       <form action="/search">
         <h4 class="mb-2">想去哪聚...</h4>
@@ -19,6 +19,8 @@
           <h4>篩選</h4>
         </label>
         <select class="form-control" id="sorts" name="sorts" onchange="submit()">
+          <option value="" selected>select...</option>
+          <option value="_id">Create time</option>
           <option value="name">Name</option>
           <option value="name_e">Name_en A_Z</option>
           <option value="-name_en">Name_en Z_A</option>
@@ -36,7 +38,7 @@
 <!-- restaurant list -->
 <div class="container mt-5">
   <div class="row">
-    <div class="col-md-10 col-12 mx-auto">
+    <div class="col-12 col-md-10 mx-auto">
       <div class="card-columns">
         {{#each restaurants}}
         <a href="./restaurants/{{this._id}}" class="text-secondary restaurants-list">
