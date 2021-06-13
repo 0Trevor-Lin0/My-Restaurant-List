@@ -12,7 +12,7 @@
 - 使用者可以使用下拉式選單，進行指定選項排列
 
 ## Home page
-![image](public/img/Restaurant List - 2-3_A8.png)
+![image](https://github.com/0Trevor-Lin0/My-Restaurant-List/blob/main/public/img/Restaurant%20List%20-%202-3_A8.png)
 
 ## Installation
 
