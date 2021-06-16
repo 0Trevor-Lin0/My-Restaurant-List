@@ -5,18 +5,19 @@ const originalList = require('../../restaurant.json')
 const db = require('../../config/mongoose')
 
 db.once('open', () => {
-  originalList.results.forEach(data => {
-    Restaurant.create({
-      name: `${data.name}`,
-      name_en: `${data.name_en}`,
-      category: `${data.category}`,
-      image: `${data.image}`,
-      location: `${data.location}`,
-      phone: `${data.phone}`,
-      google_map: `${data.google_map}`,
-      rating: `${data.rating}`,
-      description: `${data.description}`
-    })
-  })
+  // originalList.results.forEach(data => {
+  //   Restaurant.create({
+  //     name: data.name,
+  //     name_en: data.name_en,
+  //     category: data.category,
+  //     image: data.image,
+  //     location: data.location,
+  //     phone: data.phone,
+  //     google_map: data.google_map,
+  //     rating: data.rating,
+  //     description: data.description
+  //   })
+  // })
+  Restaurant.create(originalList.results)
   console.log('create done!')
 })
