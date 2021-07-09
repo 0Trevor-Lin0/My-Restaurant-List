@@ -24,9 +24,11 @@
           聚一聚
         </a>
         <div class="text-right">
-          <a type="button" class="btn btn-light pull-right" href="/restaurants/new">
-            <i class="fas fa-plus-square"></i>
-          </a>
+          {{#if isAuthenticated}}
+          <a href="/users/logout" class="btn btn-outline-light">Logout</a>
+          {{else}}
+          <a href="/users/login" class="btn btn-outline-light">Login</a>
+          {{/if}}
         </div>
       </div>
     </nav>
