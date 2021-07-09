@@ -19,6 +19,8 @@ router.get('/:id', (req, res) => {
 // 設定修改表單路由
 router.get('/:id/edit', (req, res) => {
   const id = req.params.id
+  const restaurant = new Restaurant()
+  console.log(restaurant)
   return Restaurant.findById(id)
     .lean()
     .then(detailData => res.render('edit', { detailData }))
@@ -30,15 +32,7 @@ router.post('/', (req, res) => {
   const newData = req.body
   console.log(newData)
   return Restaurant.create({
-    name: `${newData.name}`,
-    name_en: `${newData.name_en}`,
-    category: `${newData.category}`,
-    image: `${newData.image}`,
-    location: `${newData.location}`,
-    phone: `${newData.phone}`,
-    google_map: `${newData.google_map}`,
-    rating: `${newData.rating}`,
-    description: `${newData.description}`
+    newData
   })
     .then(() => res.redirect('/'))
     .catch(error => console.log(error))
