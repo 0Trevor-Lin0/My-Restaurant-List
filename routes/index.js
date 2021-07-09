@@ -7,13 +7,13 @@ const restaurants = require('./modules/restaurants')
 const search = require('./modules/search')
 const sorts = require('./modules/sorts')
 const users = require('./modules/users')
+const { authenticator } = require('../middleware/auth') // 掛載 middleware
 
-// 將網址結構符合 / 字串的 request 導向 home 模組
-router.use('/', home)
-router.use('/restaurants', restaurants)
-router.use('/search', search)
-router.use('/sorts', sorts)
+router.use('/restaurants', authenticator, restaurants)
+router.use('/search', authenticator, search)
+router.use('/sorts', authenticator, sorts)
 router.use('/users', users)
+router.use('/', authenticator, home)
 
 // 匯出路由器
 module.exports = router
