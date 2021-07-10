@@ -10,7 +10,8 @@ router.get(('/'), (req, res) => {
   // let letter lower case & clear all space
   let restaurants = []
   const keyword = req.query.keyword.toLocaleLowerCase().replace(/\s*/g, '')
-  return Restaurant.find()
+  const userId = req.user._id
+  return Restaurant.find({ userId })
     .lean()
     .then(restaurantLists => {
       restaurants = restaurantLists.filter(data => {

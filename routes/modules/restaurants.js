@@ -9,8 +9,9 @@ const Restaurant = require('../../models/restaurant')
 router.get('/new', (req, res) => res.render('new'))
 
 router.get('/:id', (req, res) => {
-  const id = req.params.id
-  return Restaurant.findById(id)
+  const userId = req.user._id
+  const _id = req.params.id
+  return Restaurant.findOne({ userId, _id })
     .lean()
     .then(detailData => res.render('show', { detailData }))
     .catch(error => console.log(error))
@@ -18,10 +19,11 @@ router.get('/:id', (req, res) => {
 
 // 設定修改表單路由
 router.get('/:id/edit', (req, res) => {
-  const id = req.params.id
-  const restaurant = new Restaurant()
-  console.log(restaurant)
-  return Restaurant.findById(id)
+  const userId = req.user._id
+  const _id = req.params.id
+  // const restaurant = new Restaurant()
+  // console.log(restaurant)
+  return Restaurant.findOne({ userId, _id })
     .lean()
     .then(detailData => res.render('edit', { detailData }))
     .catch(error => console.log(error))
@@ -29,40 +31,40 @@ router.get('/:id/edit', (req, res) => {
 
 // 運用post將資料新增傳進資料庫
 router.post('/', (req, res) => {
-  const newData = req.body
-  console.log(newData)
-  return Restaurant.create({
-    newData
-  })
+  const userId = req.user._id
+  req.body.userId = userId
+  return Restaurant.create(req.body)
     .then(() => res.redirect('/'))
     .catch(error => console.log(error))
 })
 
 // update資料至資料庫
 router.put('/:id', (req, res) => {
-  const id = req.params.id
-  const editData = req.body
-  return Restaurant.findById(id)
+  const userId = req.user._id
+  const _id = req.params.id
+  return Restaurant.findOne({ userId, _id })
     .then(detailData => {
-      detailData.name = editData.name
-      detailData.name_en = editData.name_en
-      detailData.category = editData.category
-      detailData.image = editData.image
-      detailData.location = editData.location
-      detailData.phone = editData.phone
-      detailData.google_map = editData.google_map
-      detailData.rating = editData.rating
-      detailData.description = editData.description
+      detailData = Object.assign(detailData, req.body)
+      // detailData.name = editData.name
+      // detailData.name_en = editData.name_en
+      // detailData.category = editData.category
+      // detailData.image = editData.image
+      // detailData.location = editData.location
+      // detailData.phone = editData.phone
+      // detailData.google_map = editData.google_map
+      // detailData.rating = editData.rating
+      // detailData.description = editData.description
       return detailData.save()
     })
-    .then(() => res.redirect(`/restaurants/${id}`))
+    .then(() => res.redirect(`/restaurants/${_id}`))
     .catch(error => console.log(error))
 })
 
 // 設定刪除特定資料路由
 router.delete('/:id', (req, res) => {
-  const id = req.params.id
-  return Restaurant.findById(id)
+  const userId = req.user._id
+  const _id = req.params.id
+  return Restaurant.findOne({ userId, _id })
     .then(detailData => detailData.remove())
     .then(() => res.redirect('/'))
     .catch(error => console.log(error))
