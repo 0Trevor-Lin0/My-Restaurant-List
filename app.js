@@ -1,17 +1,23 @@
+// require套件
 const express = require('express')
 const exphbs = require('express-handlebars')
 const methodOverride = require('method-override')
 // 載入 connect-flash
 const flash = require('connect-flash')
-// 引用路由器
 const routes = require('./routes')
 // 引入express-session
 const session = require('express-session')
 const usePassport = require('./config/passport')
-require('./config/mongoose')
 
 const app = express()
-const port = 3000
+
+// 隱藏敏感資訊與環境變數
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
+
+require('./config/mongoose')
+const port = process.env.PORT
 
 // setting template engine
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
@@ -27,7 +33,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
 
 app.use(session({
-  secret: 'foodCode',
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true
 }))
