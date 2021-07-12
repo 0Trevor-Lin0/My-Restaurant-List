@@ -31,8 +31,8 @@ router.post('/register', (req, res) => {
   if (!name || !email || !password || !confirmPassword) {
     errors.push({ message: '所有欄位都是必填。' })
   }
-  if (password.length < 6) {
-    errors.push({ message: '密碼長度要大於6字元！' })
+  if (password.length < 6 || password.length > 16) {
+    errors.push({ message: '密碼長度要6至16字元之間！' })
   }
   if (password !== confirmPassword) {
     errors.push({ message: '密碼與確認密碼不相符，只能輸入英文與數字！' })
