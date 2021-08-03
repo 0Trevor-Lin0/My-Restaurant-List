@@ -1,6 +1,7 @@
 // 引用 Express 與 Express 路由器
 const express = require('express')
 const router = express.Router()
+// const axios = require('axios')
 
 // 引用 restaurant model
 const Restaurant = require('../../models/restaurant')
@@ -11,9 +12,18 @@ router.get('/new', (req, res) => res.render('new'))
 router.get('/:id', (req, res) => {
   const userId = req.user._id
   const _id = req.params.id
+  const googleApiKey = process.env.GOOGLE_MAP_API
   return Restaurant.findOne({ userId, _id })
     .lean()
-    .then(detailData => res.render('show', { detailData }))
+    // .then(detailData =>
+    //   axios
+    //     .get('https://maps.googleapis.com/maps/api/geocode/json?address=台灣台北市萬華區康定路190號&key=AIzaSyAIrvHWEeV49yW-1ENswj5TlxYpifj2m1w')
+    //     .then(response => {
+    //       console.log(response.data.results[0].geometry.location)
+    //       // return response.data.results[0].geometry.location
+    //     })
+    // )
+    .then(detailData => res.render('show', { detailData, googleApiKey }))
     .catch(error => console.log(error))
 })
 
