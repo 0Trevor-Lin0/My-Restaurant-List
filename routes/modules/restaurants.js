@@ -15,14 +15,6 @@ router.get('/:id', (req, res) => {
   const googleApiKey = process.env.GOOGLE_MAP_API
   return Restaurant.findOne({ userId, _id })
     .lean()
-    // .then(detailData =>
-    //   axios
-    //     .get('https://maps.googleapis.com/maps/api/geocode/json?address=台灣台北市萬華區康定路190號&key=AIzaSyAIrvHWEeV49yW-1ENswj5TlxYpifj2m1w')
-    //     .then(response => {
-    //       console.log(response.data.results[0].geometry.location)
-    //       // return response.data.results[0].geometry.location
-    //     })
-    // )
     .then(detailData => res.render('show', { detailData, googleApiKey }))
     .catch(error => console.log(error))
 })

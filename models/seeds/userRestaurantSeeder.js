@@ -12,14 +12,18 @@ const seedUsers = [
   {
     name: 'User1',
     email: 'user1@example.com',
-    password: '12345678'
+    password: '12345678',
+    restaurantId: [1, 2, 3]
   },
   {
     name: 'User2',
     email: 'user2@example.com',
-    password: '12345678'
+    password: '12345678',
+    restaurantId: [4, 5, 6]
   }
 ]
+
+const createRestaurantArr = []
 
 db.once('open', () => {
   Promise
@@ -31,21 +35,23 @@ db.once('open', () => {
           name: seedUser.name,
           email: seedUser.email,
           password: hash
-        }))
+        })) // 會回傳一個create好的資料
         .then(user => {
           const userId = user._id
-          return Promise.all(Array.from({ length: 3 }, (_, i) => {
-            restaurantList[(i + index * 3)].userId = userId
-            return Restaurant.create(restaurantList[i + index * 3])
-          }))
-          // for (let i = (0 + index * 3); i < (3 + index * 3); i++) {
-          //   restaurantList[i].userId = userId
-          //   Restaurant.create(restaurantList[i])
-          // }
+          seedUsers[index].restaurantId.forEach(id => {
+            restaurantList.forEach(restaurant => {
+              if (restaurant.id === id) {
+                restaurant.userId = userId
+                createRestaurantArr.push(restaurant)
+              }
+            })
+          })
         })
     }))
+    .then(() => Restaurant.create(createRestaurantArr))
     .then(() => {
       console.log('seeder success')
       return process.exit()
     })
+    .catch(error => console.log(error))
 })

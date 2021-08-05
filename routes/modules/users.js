@@ -28,8 +28,8 @@ router.post('/register', (req, res) => {
   // 取得註冊表單參數
   const { name, email, password, confirmPassword } = req.body
   const errors = []
-  if (!name || !email || !password || !confirmPassword) {
-    errors.push({ message: '所有欄位都是必填。' })
+  if (!email || !password || !confirmPassword) {
+    errors.push({ message: 'email & password欄位都是必填。' })
   }
   if (password.length < 6 || password.length > 16) {
     errors.push({ message: '密碼長度要6至16字元之間！' })
