@@ -4,24 +4,10 @@ if (process.env.NODE_ENV !== 'production') {
 }
 const Restaurant = require('../restaurant')
 const User = require('../user')
-// 載入restaurant.json資料
+// 載入restaurant & user json資料
 const restaurantList = require('../../restaurant.json').results
+const seedUsers = require('./user.json')
 const db = require('../../config/mongoose')
-
-const seedUsers = [
-  {
-    name: 'User1',
-    email: 'user1@example.com',
-    password: '12345678',
-    restaurantId: [1, 2, 3]
-  },
-  {
-    name: 'User2',
-    email: 'user2@example.com',
-    password: '12345678',
-    restaurantId: [4, 5, 6]
-  }
-]
 
 const createRestaurantArr = []
 
@@ -38,13 +24,11 @@ db.once('open', () => {
         })) // 會回傳一個create好的資料
         .then(user => {
           const userId = user._id
-          seedUsers[index].restaurantId.forEach(id => {
-            restaurantList.forEach(restaurant => {
-              if (restaurant.id === id) {
-                restaurant.userId = userId
-                createRestaurantArr.push(restaurant)
-              }
-            })
+          restaurantList.forEach(restaurant => {
+            if (seedUsers[index].restaurantId.includes(restaurant.id)) {
+              restaurant.userId = userId
+              createRestaurantArr.push(restaurant)
+            }
           })
         })
     }))
